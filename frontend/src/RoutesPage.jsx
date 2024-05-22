@@ -7,6 +7,7 @@ import Login from "./pages/Login/Login";
 // import Register from "./pages/Register/Register";
 import Logout from "./pages/Logout/Logout";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import InvoiceIn from "./pages/InvoiceIn/InvoiceIn";
 
 // import Secure from "./componants/Secure";
 
@@ -22,6 +23,8 @@ const RoutesPage = () => {
                 {/* private */}
                 <Route element={<AuthOutlet fallbackPath='/login' />}>
                     <Route path='/' element={<Home/>} />
+                    <Route path='/invoice-in' element={<InvoiceIn/>} />
+
                     {/* <Route path='/profile/:userId' element={<Profile />} /> */}
                     <Route path='/logout' element={<Logout />} />
                 </Route>
