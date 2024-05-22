@@ -9,20 +9,30 @@ const MainContainer = ({children, type = "default"}) => {
 
             <main className="w-full flex flex-col justify-center items-center">
 
-                {type == "home" ? (
-                    <div className="w-full px-10">
-                        <h2 className="text-center scroll-m-20 text-lg font-extrabold tracking-tight lg:text-4xl py-5">
-                            Home
+                {type == "dashboard" ? (
+                    <main className="max-w-full w-[1400px] px-10">
+                        <h2 className="text-center scroll-m-20 text-lg font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
+                            Dashboard
                         </h2>
                         {children}
-                    </div>
+                    </main>
                         
                 ) : null}
 
-                {type == "feed" ? (
+                {type == "invoice-in" ? (
+                    <div className="max-w-full w-[1400px] px-10">
+                        <h2 className="text-center scroll-m-20 text-lg font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
+                            Invoice in
+                        </h2>
+                        {children}
+                    </div>
+                    
+                ) : null}
+
+                {type == "invoice-out" ? (
                     <div className="max-w-full w-[700px]">
-                        <h2 className="text-center scroll-m-20 text-lg font-extrabold tracking-tight lg:text-4xl py-5">
-                            Home
+                        <h2 className="text-center scroll-m-20 text-lg font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
+                            Invoice out
                         </h2>
                         {children}
                     </div>
@@ -31,7 +41,7 @@ const MainContainer = ({children, type = "default"}) => {
 
                 {type == "profile" ? (
                     <div className="max-w-full flex flex-col justify-center items-center">
-                        <h2 className="text-center scroll-m-20 text-lg font-extrabold tracking-tight lg:text-4xl py-5">
+                        <h2 className="text-center scroll-m-20 text-lg font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
                             Profile
                         </h2>
                         {children}
