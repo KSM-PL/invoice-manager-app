@@ -12,4 +12,6 @@ public interface UserService {
     Boolean checkEmailAvailability(String email);
 
     UserEntity findUserByEmail(String email);
+
+    UserEntity findUserById(String id);
 }

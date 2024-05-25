@@ -5,6 +5,7 @@ import com.ksm.invoiceapp.model.UserEntity;
 import com.ksm.invoiceapp.repository.UserRepository;
 import com.ksm.invoiceapp.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,14 @@ public class UserServiceImpl implements UserService {
     public UserEntity findUserByEmail(String email) {
         return this.userRepository.findByEmail(email).orElseThrow(
                 ()-> new EmailNotFound("Email not found!")
+        );
+    }
+
+    @Override
+    public UserEntity findUserById(String id){
+
+        return this.userRepository.findById(id).orElseThrow(
+                ()-> new UsernameNotFoundException("User not found")
         );
     }
 
