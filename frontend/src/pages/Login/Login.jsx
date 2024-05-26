@@ -151,7 +151,7 @@ const Login = () => {
                     <Card className="max-w-full w-[400px]">
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <CardHeader>
-                                <CardTitle className="scroll-m-20 text-2xl font-bold tracking-tight">Login</CardTitle>
+                                <CardTitle className="scroll-m-20 text-xl font-bold tracking-tight">Login</CardTitle>
                                 <CardDescription>Enter your details to log in!</CardDescription>
                             </CardHeader>
                             <CardContent>
