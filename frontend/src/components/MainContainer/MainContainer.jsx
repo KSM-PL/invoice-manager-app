@@ -12,7 +12,7 @@ const MainContainer = ({children, type = "default"}) => {
 
                 {type == "dashboard" ? (
                     <main className="max-w-full w-[1400px] px-10">
-                        <h2 className="text-center scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
+                        <h2 className="text-center scroll-m-20 text-xl font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
                             Dashboard
                         </h2>
                         {children}
@@ -22,7 +22,7 @@ const MainContainer = ({children, type = "default"}) => {
 
                 {type == "invoice-in" ? (
                     <div className="max-w-full w-[1400px] px-10">
-                        <h2 className="text-center scroll-m-20 text-lg font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
+                        <h2 className="text-center scroll-m-20 text-xl font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
                             Invoice in
                         </h2>
                         {children}
@@ -32,7 +32,7 @@ const MainContainer = ({children, type = "default"}) => {
 
                 {type == "invoice-out" ? (
                     <div className="max-w-full w-[1400px] px-10">
-                        <h2 className="text-center scroll-m-20 text-lg font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
+                        <h2 className="text-center scroll-m-20 text-xl font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
                             Invoice out
                         </h2>
                         {children}
@@ -40,13 +40,14 @@ const MainContainer = ({children, type = "default"}) => {
                     
                 ) : null}
 
-                {type == "profile" ? (
-                    <div className="max-w-full flex flex-col justify-center items-center">
-                        <h2 className="text-center scroll-m-20 text-lg font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
-                            Profile
+                {type == "create-invoice" ? (
+                    <div className="max-w-full w-[800px] px-10">
+                        <h2 className="text-center scroll-m-20 text-xl font-extrabold tracking-tight lg:text-4xl pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
+                            Create invoice
                         </h2>
                         {children}
                     </div>
+                    
                 ) : null}
 
                 {type == "default" ? (
