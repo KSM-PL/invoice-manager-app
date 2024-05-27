@@ -82,58 +82,6 @@ const Login = () => {
                 })
             });
 
-            
-            /*
-            try {
-                const response = await fetch(
-                    "http://localhost:8080/api/v1/auth/login",
-                    {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(values),
-                    }
-                );
-
-                const data = await response.json();
-                // console.log(values);
-                
-                if(response.status === 400) {
-                    if(data === "The password is incorrect") {
-                        throw new Error(data);
-                    } else if (data === "No record existed") {
-                        throw new Error("The user with this email address does not exist");
-                    } else {
-                        throw new Error(data);
-                    }
-                }
-
-                // signIn({
-                //     auth: { token: data.token, type: 'Bearer' },
-                //     userState: {
-                //         _id: `${data.userData._id}`,
-                //         firstName: `${data.userData.firstName}`,
-                //         lastName: `${data.userData.lastName}`,
-                //         email: `${values.email}`,
-                //     },
-                // });
-                console.log(data);
-                toast({
-                    title: "Hurrah!",
-                    description: "Successfully logged in!",
-                    className: "bg-green-800"
-                })
-
-                navigate("/");
-
-            } catch (error) {
-
-                toast({
-                    variant: "destructive",
-                    title: "Uh oh! Something went wrong.",
-                    description: error.message,
-                })
-            }
-            */
         } else {
             alert("INVALID");
         }
