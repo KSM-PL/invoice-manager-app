@@ -7,7 +7,9 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import ModeToggle from "@/components/ModeToggle";
-
+import {
+    PlusIcon
+} from "@radix-ui/react-icons";
 import {
     Sheet,
     SheetClose,
@@ -26,11 +28,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import CreateInvoice from "../../pages/CreateInvoice/CreateInvoice";
 
 const Navbar = () => {
     const isAuthenticated = useIsAuthenticated();
     const location = useLocation();
-    // const auth = useAuthUser();
+    const auth = useAuthUser();
 
     return (
         <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 w-full justify-between backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -90,38 +93,41 @@ const Navbar = () => {
                                 {/* <Icons.github className="h-6 w-6" /> */}
                                 <span className="sr-only">Acme Inc</span>
                             </Link>
-                            <Link href="#" className="hover:text-foreground">
+                            <Link
+                                to="/"
+                                className={cn("transition-colors hover:text-foreground", (location.pathname == "/") ? "text-foreground [text-shadow:_0_0_15px_rgb(255_255_255_/_100%)]" : "text-muted-foreground")}
+                                // className="text-muted-foreground transition-colors hover:text-foreground"
+                            >
                                 Dashboard
                             </Link>
                             <Link
-                                href="#"
-                                className="text-muted-foreground hover:text-foreground"
+                                to="/invoice-in"
+                                className={cn("transition-colors hover:text-foreground", (location.pathname == "/invoice-in") ? "text-foreground [text-shadow:_0_0_15px_rgb(255_255_255_/_100%)]" : "text-muted-foreground")}
                             >
-                                Orders
+                                Invoice in
                             </Link>
                             <Link
-                                href="#"
-                                className="text-muted-foreground hover:text-foreground"
+                                to="/invoice-out"
+                                className={cn("transition-colors hover:text-foreground", (location.pathname == "/invoice-out") ? "text-foreground [text-shadow:_0_0_15px_rgb(255_255_255_/_100%)]" : "text-muted-foreground")}
                             >
-                                Products
-                            </Link>
-                            <Link
-                                href="#"
-                                className="text-muted-foreground hover:text-foreground"
-                            >
-                                Customers
-                            </Link>
-                            <Link
-                                href="#"
-                                className="text-muted-foreground hover:text-foreground"
-                            >
-                                Analytics
+                                Invoice out
                             </Link>
                         </nav>
                     </SheetContent>
                 </Sheet>
             ) : null }
+
             <div className="flex items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+                <Link to="/create-invoice">
+                    <Button className="gap-1 px-3 group relative inline-flex items-center justify-center overflow-hidden rounded-md font-medium ">
+                        <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                            <div className="relative h-full w-8 bg-secondary/20"></div>
+                        </div>
+                        <PlusIcon className="" />
+                        Create invoice
+                    </Button>
+                </Link>
+
                 <ModeToggle className="mx-3"/>
 
                 { isAuthenticated ? (
@@ -134,8 +140,15 @@ const Navbar = () => {
                         </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator /> */}
+                            <DropdownMenuLabel>
+                                <div className="flex flex-col space-y-1">
+                                    <p className="text-sm font-medium leading-none">{auth.firstName} {auth.lastName}</p>
+                                    <p className="text-xs leading-none text-muted-foreground">
+                                    {auth.email}
+                                    </p>
+                                </div>
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
                             <DropdownMenuItem className="cursor-pointer">Export data (JSON)</DropdownMenuItem>
                             {/* <DropdownMenuItem className="cursor-pointer">Support</DropdownMenuItem> */}
                             <DropdownMenuSeparator />
