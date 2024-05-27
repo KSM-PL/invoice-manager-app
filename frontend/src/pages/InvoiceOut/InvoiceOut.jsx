@@ -10,15 +10,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import {
     ChevronLeftIcon,
@@ -29,6 +20,8 @@ import {
 } from "@radix-ui/react-icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/use-toast";
+import { Icons } from "@/components/icons";
+import { Link } from "react-router-dom";
 
 const InvoiceOut = () => {
 	const authHeader = useAuthHeader();
@@ -37,7 +30,7 @@ const InvoiceOut = () => {
     const [invoices, setInvoices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(3);
+    const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(0);
 
 
@@ -117,7 +110,7 @@ const InvoiceOut = () => {
                             <>
                                 <TableRow>
                                     <TableCell><Skeleton className="w-[180px] h-[30px] my-1" /></TableCell>
-                                    <TableCell><Skeleton className="w-[50px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
                                     <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
                                     <TableCell><Skeleton className="w-full h-[30px]" /></TableCell>
                                     <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
@@ -125,8 +118,8 @@ const InvoiceOut = () => {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell><Skeleton className="w-[180px] h-[30px] my-1" /></TableCell>
-                                    <TableCell><Skeleton className="w-[50px] h-[30px]" /></TableCell>
-                                    <TableCell><Skeleton className="w-[50px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
                                     <TableCell><Skeleton className="w-full h-[30px]" /></TableCell>
                                     <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
                                     {/* <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell> */}
@@ -141,14 +134,7 @@ const InvoiceOut = () => {
                                             <TableCell>{invoice.recipientFullName}</TableCell>
                                             <TableCell>{invoice.recipientEmail}</TableCell>
                                             <TableCell>{invoice.name}</TableCell>
-                                            <TableCell>${invoice.amount}</TableCell>
-                                            {/* <TableCell>
-                                                <Button variant="outline" className="gap-1 p-2">
-                                                    <CheckIcon />
-                                                    Pay
-                                                </Button>
-                                            </TableCell> */}
-                                            
+                                            <TableCell>${invoice.amount}</TableCell>                                         
                                         </TableRow>
                                     )
                                 })
@@ -176,9 +162,12 @@ const InvoiceOut = () => {
                     </div>
                 )}
 
-                {!loading && invoices.length === 0 ? (
-                    <h1 className="pb-2 text-md font-semibold tracking-tight opacity-50 transition-colors text-center">No invoices to display</h1>
-                ) : null}
+                {invoices && (invoices.length === 0) && !loading && 
+                    <div className="h-full flex flex-col justify-center items-center ">
+                        <Icons.noData className="h-[150px] w-full opacity-20"/>
+                        <h1 className="pb-2 mt-3 text-md font-semibold tracking-tight opacity-50 transition-colors text-center">No invoices to display</h1>
+                    </div>
+                }
 
             </div>
         </MainContainer>
