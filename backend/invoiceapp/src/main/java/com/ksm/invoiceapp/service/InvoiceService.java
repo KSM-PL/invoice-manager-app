@@ -7,5 +7,5 @@ import org.springframework.data.domain.Page;
 public interface InvoiceService {
     String createNewInvoice(InvoiceRequestDto invoiceRequestDto);
 
-    Page<InvoiceResponseDto> getInvoicesForUserId(String type, int pageNumber, int pageSize);
+    Page<InvoiceResponseDto> getInvoicesForUserId(String type, int pageNumber, int pageSize, String sortField, String sortDirection);
 }

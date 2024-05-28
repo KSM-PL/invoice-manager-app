@@ -10,9 +10,7 @@ import com.ksm.invoiceapp.service.AuthService;
 import com.ksm.invoiceapp.service.InvoiceService;
 import com.ksm.invoiceapp.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -36,24 +34,28 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public Page<InvoiceResponseDto> getInvoicesForUserId(String type, int pageNumber, int pageSize) {
+    public Page<InvoiceResponseDto> getInvoicesForUserId(String type, int pageNumber, int pageSize, String sortField, String sortDirection) {
         String userId = authService.getLoggedUser().getId();
-        Page<Invoice> invoices=null;
 
-        System.out.println("LoggedUser");
-        if(Objects.equals(type, "in")){
-            invoices = invoiceRepository.findByRecipientId(userId,PageRequest.of(pageNumber,pageSize));
-        }else if(Objects.equals(type, "out")){
-            invoices = invoiceRepository.findByAuthorId(userId,PageRequest.of(pageNumber,pageSize));
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(direction, sortField));
+
+        Page<Invoice> invoices = null;
+
+        System.out.println("Using sort: " + sortField);
+        System.out.println("Using sortDirection: " + sortDirection);
+
+        if (Objects.equals(type, "in")) {
+            invoices = invoiceRepository.findByRecipientId(userId, pageable);
+        } else if (Objects.equals(type, "out")) {
+            invoices = invoiceRepository.findByAuthorId(userId, pageable);
         }
 
-
-
         return new PageImpl<>(
-                invoices
-                        .stream()
+                invoices.stream()
                         .map(invoiceMappper::mapToInvoiceResponseDto)
-                        .collect(Collectors.toList()), PageRequest.of(pageNumber,pageSize),
+                        .collect(Collectors.toList()),
+                pageable,
                 invoices.getTotalElements()
         );
     }

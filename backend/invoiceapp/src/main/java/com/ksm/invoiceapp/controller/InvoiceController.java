@@ -26,8 +26,11 @@ public class InvoiceController {
     @GetMapping
     public ResponseEntity<Page<InvoiceResponseDto>> getInvoicesForUser(@RequestParam String type,
                                                                        @RequestParam int pageNumber,
-                                                                       @RequestParam int pageSize){
-        Page<InvoiceResponseDto> res = invoiceService.getInvoicesForUserId(type, pageNumber,pageSize);
+                                                                       @RequestParam int pageSize,
+                                                                       @RequestParam(required = false, defaultValue = "created_at") String sortField,
+                                                                       @RequestParam(required = false, defaultValue = "ASC") String sortDirection)
+    {
+        Page<InvoiceResponseDto> res = invoiceService.getInvoicesForUserId(type, pageNumber, pageSize, sortField, sortDirection);
     return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
