@@ -41,10 +41,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(direction, sortField));
 
         Page<Invoice> invoices = null;
-
-        System.out.println("Using sort: " + sortField);
-        System.out.println("Using sortDirection: " + sortDirection);
-
+        
         if (Objects.equals(type, "in")) {
             invoices = invoiceRepository.findByRecipientId(userId, pageable);
         } else if (Objects.equals(type, "out")) {
