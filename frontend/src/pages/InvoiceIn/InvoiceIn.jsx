@@ -16,11 +16,21 @@ import {
     ChevronRightIcon,
     DotsHorizontalIcon,
     CheckIcon,
+    ArrowDownIcon,
 } from "@radix-ui/react-icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
 import { Link } from "react-router-dom";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { cn } from './../../lib/utils';
 
 const InvoiceIn = () => {
 	const authHeader = useAuthHeader();
@@ -29,14 +39,14 @@ const InvoiceIn = () => {
     const [invoices, setInvoices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
 
 
     const fetchInvoices = async () => {
         setLoading(true);
 
-        fetch(`http://localhost:8080/api/v1/invoices/?pageNumber=${(currentPage - 1)}&pageSize=${pageSize}&type=in&sortField=created_at&sortDirection=desc`, {
+        fetch(`http://localhost:8080/api/v1/invoices/?pageNumber=${(currentPage - 1)}&pageSize=${pageSize}&type=in&sortField=dueDate&sortDirection=asc`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json', 
@@ -91,6 +101,11 @@ const InvoiceIn = () => {
     return (
         <MainContainer type="invoice-in">
             <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+                <div className="flex justify-center items-center">
+                    <p className="text-sm text-muted-foreground text-center">
+                        Rows are sorted by Due date.
+                    </p>
+                </div>
                 <Table>
                     {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                     <TableHeader>
@@ -99,6 +114,7 @@ const InvoiceIn = () => {
                             <TableHead className="w-fit text-nowrap">Author name</TableHead>
                             <TableHead className="w-fit text-nowrap">Author email</TableHead>
                             <TableHead className="w-full text-nowrap">Description</TableHead>
+                            <TableHead className="w-fit text-right text-nowrap flex flex-row justify-center items-center gap-1"><ArrowDownIcon />Due date</TableHead>
                             <TableHead className="w-fit text-right text-nowrap">Amount</TableHead>
                             <TableHead className="w-fit text-right text-nowrap"></TableHead>
                         </TableRow>
@@ -113,12 +129,16 @@ const InvoiceIn = () => {
                                 <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
                                 <TableCell><Skeleton className="w-full h-[30px]" /></TableCell>
                                 <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
+                                <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
+                                <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell><Skeleton className="w-[180px] h-[30px] my-1" /></TableCell>
                                 <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
                                 <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
                                 <TableCell><Skeleton className="w-full h-[30px]" /></TableCell>
+                                <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
+                                <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
                                 <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
                             </TableRow>
                             </>
@@ -131,12 +151,20 @@ const InvoiceIn = () => {
                                         <TableCell>{invoice.authorFullName}</TableCell>
                                         <TableCell>{invoice.authorEmail}</TableCell>
                                         <TableCell>{invoice.name}</TableCell>
+                                        <TableCell className={cn(new Date() > new Date(invoice.dueDate) ? "bg-red-500" : "")}>{new Date(invoice.dueDate).toLocaleDateString()}</TableCell>
                                         <TableCell>${invoice.amount}</TableCell>
                                         <TableCell>
-                                            <Button variant="outline" className="gap-1 p-2">
-                                                <CheckIcon />
-                                                Pay
-                                            </Button>
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger>
+                                                    <div className="gap-1 p-2 cursor-pointer hover:bg-secondary rounded-md">
+                                                        <DotsHorizontalIcon />
+                                                    </div>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent>
+                                                    <DropdownMenuItem className="cursor-pointer">Pay</DropdownMenuItem>
+                                                    <DropdownMenuItem className="cursor-pointer">Export JSON as...</DropdownMenuItem>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
                                         </TableCell>
                                         
                                     </TableRow>
