@@ -124,7 +124,7 @@ const Navbar = () => {
                             <div className="relative h-full w-8 bg-secondary/20"></div>
                         </div>
                         <PlusIcon className="" />
-                        Create invoice
+                        <p className="hidden sm:flex">Create invoice</p>
                     </Button>
                 </Link>
 
