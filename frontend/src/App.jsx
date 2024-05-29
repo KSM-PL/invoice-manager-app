@@ -1,8 +1,8 @@
 import RoutesPage from "./RoutesPage";
 import AuthProvider from "react-auth-kit";
 import createStore from "react-auth-kit/createStore";
-import { ThemeProvider } from "@/components/ThemeProvider"
-import { Toaster } from "@/components/ui/toaster"
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const store = createStore({
     authName: "_auth",
