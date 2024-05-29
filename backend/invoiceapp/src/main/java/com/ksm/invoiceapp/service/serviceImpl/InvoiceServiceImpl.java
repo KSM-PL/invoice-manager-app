@@ -60,7 +60,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public void payInvoice(String invoiceId) {
         Invoice invoice = invoiceRepository.findById(invoiceId)
-                .orElseThrow(() -> new IllegalArgumentException("Invoice not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Invoice with ID " + invoiceId + " not found"));
         invoice.setIsPaid(true);
         invoiceRepository.save(invoice);
     }
