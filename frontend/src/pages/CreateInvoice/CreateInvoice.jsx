@@ -103,14 +103,8 @@ const CreateInvoice = () => {
     };
 
     return (
-        <MainContainer type="create-invoice">
+        <MainContainer type="create-invoice" description="Fill in the details and then click the button.">
             <div className="flex flex-col justify-center items-center pt-4 md:pt-8 w-full">
-                <div>
-                    {/* <h3 className="text-lg font-medium">Profile</h3> */}
-                    <p className="text-sm text-muted-foreground">
-                        Fill in the details and then click the button.
-                    </p>
-                </div>
                 <form className="pt-5 w-full" onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid w-full items-center gap-4">
                         <div className="flex flex-col space-y-1.5">
