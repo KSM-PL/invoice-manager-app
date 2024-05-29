@@ -56,4 +56,12 @@ public class InvoiceServiceImpl implements InvoiceService {
                 invoices.getTotalElements()
         );
     }
+
+    @Override
+    public void payInvoice(String invoiceId) {
+        Invoice invoice = invoiceRepository.findById(invoiceId)
+                .orElseThrow(() -> new IllegalArgumentException("Invoice not found"));
+        invoice.setIsPaid(true);
+        invoiceRepository.save(invoice);
+    }
 }
