@@ -10,4 +10,6 @@ public interface InvoiceService {
     Page<InvoiceResponseDto> getInvoicesForUserId(String type, int pageNumber, int pageSize, String sortField, String sortDirection);
 
     void payInvoice(String invoiceId);
+
+    InvoiceResponseDto getInvoiceById(String invoiceId);
 }

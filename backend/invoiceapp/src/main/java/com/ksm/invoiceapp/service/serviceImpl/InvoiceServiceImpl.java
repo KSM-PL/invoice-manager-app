@@ -64,4 +64,11 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice.setIsPaid(true);
         invoiceRepository.save(invoice);
     }
+
+    @Override
+    public InvoiceResponseDto getInvoiceById(String invoiceId) {
+        Invoice invoice = invoiceRepository.findById(invoiceId)
+                .orElseThrow(() -> new IllegalArgumentException("Invoice with ID " + invoiceId + " not found"));
+        return invoiceMappper.mapToInvoiceResponseDto(invoice);
+    }
 }

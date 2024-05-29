@@ -47,4 +47,10 @@ public class InvoiceController {
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Invoice paid successfully"));
     }
 
+
+    @GetMapping("/{invoiceId}")
+    public ResponseEntity<InvoiceResponseDto> getInvoiceById(@PathVariable String invoiceId) {
+        InvoiceResponseDto invoiceResponseDto = invoiceService.getInvoiceById(invoiceId);
+        return ResponseEntity.status(HttpStatus.OK).body(invoiceResponseDto);
+    }
 }
