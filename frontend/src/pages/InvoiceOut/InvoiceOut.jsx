@@ -37,7 +37,7 @@ const InvoiceOut = () => {
     const fetchInvoices = async () => {
         setLoading(true);
 
-        fetch(`http://localhost:8080/api/v1/invoices/?pageNumber=${(currentPage - 1)}&pageSize=${pageSize}&type=out`, {
+        fetch(`http://localhost:8080/api/v1/invoices/?pageNumber=${(currentPage - 1)}&pageSize=${pageSize}&type=out&sortField=created_at&sortDirection=desc`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json', 

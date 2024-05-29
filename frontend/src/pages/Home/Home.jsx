@@ -31,7 +31,7 @@ const Home = () => {
     useEffect(() => {
         setLoading(true);
 
-        fetch(`http://localhost:8080/api/v1/invoices/?pageNumber=0&pageSize=3&type=in`, {
+        fetch(`http://localhost:8080/api/v1/invoices/?pageNumber=0&pageSize=3&type=in&sortField=created_at&sortDirection=desc`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json', 
@@ -62,7 +62,7 @@ const Home = () => {
 
 
 
-        fetch(`http://localhost:8080/api/v1/invoices/?pageNumber=0&pageSize=3&type=out`, {
+        fetch(`http://localhost:8080/api/v1/invoices/?pageNumber=0&pageSize=3&type=out&sortField=created_at&sortDirection=desc`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json', 
@@ -287,10 +287,10 @@ const Home = () => {
                                             </Avatar>
                                             <div className="grid gap-1">
                                                 <p className="text-sm font-medium leading-none">
-                                                    {invoice.authorFullName}
+                                                    {invoice.recipientFullName}
                                                 </p>
                                                 <p className="text-sm text-muted-foreground">
-                                                    {invoice.authorEmail}
+                                                    {invoice.recipientEmail}
                                                 </p>
                                             </div>
                                             <div className="ml-auto font-medium">
