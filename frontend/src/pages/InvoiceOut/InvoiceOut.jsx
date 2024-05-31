@@ -9,14 +9,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import { Button } from "@/components/ui/button";
 import {
@@ -32,6 +25,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
 import { Link } from "react-router-dom";
 import { cn } from './../../lib/utils';
+import InvoiceSettingsButton from "@/components/InvoiceSettingsButton/InvoiceSettingsButton";
 
 const InvoiceOut = () => {
 	const authHeader = useAuthHeader();
@@ -43,6 +37,7 @@ const InvoiceOut = () => {
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
 
+    const [refetchInvoice, setRefetchInvoice] = useState(false);
 
     const fetchInvoices = async () => {
         setLoading(true);
@@ -83,9 +78,10 @@ const InvoiceOut = () => {
     };
 
     useEffect(() => {
+        setRefetchInvoice(false);
         fetchInvoices();
         // console.log(currentPage);
-    }, [currentPage]);
+    }, [currentPage, refetchInvoice]);
 
     const handlePrevPage = () => {
         if (currentPage > 1) {
@@ -99,54 +95,13 @@ const InvoiceOut = () => {
         }
     };
     
-    const fetchInvoiceDetails = async (invoiceId) => {
-        const response = await fetch(`http://localhost:8080/api/v1/invoices/${invoiceId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json', 
-                "Authorization": authHeader,
-            },
-        });
-
-        if (!response.ok) {
-            const errorMessage = await response.json();
-            throw new Error(errorMessage.message);
-        }
-
-        return response.json();
-    };
-
-    const downloadInvoiceJSON = async (invoiceId) => {
-        try {
-            const invoiceData = await fetchInvoiceDetails(invoiceId);
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(invoiceData));
-            const downloadAnchorNode = document.createElement('a');
-            downloadAnchorNode.setAttribute("href", dataStr);
-            downloadAnchorNode.setAttribute("download", `invoice_${invoiceId}.json`);
-            document.body.appendChild(downloadAnchorNode);
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
-        } catch (error) {
-            toast({
-                variant: "destructive",
-                title: "Error downloading invoice.",
-                description: error.message,
-            });
-        }
-    };
-
     return (
-        <MainContainer type="invoice-out">
+        <MainContainer type="invoice-out" description="Rows are sorted by Due date.">
             <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-                <div className="flex justify-center items-center">
-                    <p className="text-sm text-muted-foreground text-center">
-                        Rows are sorted by Due date.
-                    </p>
-                </div>
                 <Table>
                     {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                     <TableHeader>
-                        <TableRow>
+                        <TableRow >
                             <TableHead className="w-fit text-nowrap">Invoice ID</TableHead>
                             <TableHead className="w-fit text-nowrap">Recipient name</TableHead>
                             <TableHead className="w-fit text-nowrap">Recipient email</TableHead>
@@ -161,22 +116,22 @@ const InvoiceOut = () => {
                         {loading ? (
                             <>
                                 <TableRow>
-                                    <TableCell><Skeleton className="w-[180px] h-[30px] my-1" /></TableCell>
+                                    <TableCell><Skeleton className="w-[170px] h-[30px] my-1" /></TableCell>
                                     <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
-                                    <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[80px] h-[30px]" /></TableCell>
                                     <TableCell><Skeleton className="w-full h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[60px] h-[30px]" /></TableCell>
                                     <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
-                                    <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
-                                    <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[30px] h-[30px]" /></TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell><Skeleton className="w-[180px] h-[30px] my-1" /></TableCell>
+                                    <TableCell><Skeleton className="w-[170px] h-[30px] my-1" /></TableCell>
                                     <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
-                                    <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[80px] h-[30px]" /></TableCell>
                                     <TableCell><Skeleton className="w-full h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[60px] h-[30px]" /></TableCell>
                                     <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
-                                    <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
-                                    <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[30px] h-[30px]" /></TableCell>
                                 </TableRow>
                             </>
 
@@ -191,17 +146,11 @@ const InvoiceOut = () => {
                                             <TableCell className={cn(new Date() > new Date(invoice.dueDate) ? "bg-red-500" : "")}>{new Date(invoice.dueDate).toLocaleDateString()}</TableCell>
                                             <TableCell>${invoice.amount}</TableCell>
                                             <TableCell>
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger>
-                                                        <div className="gap-1 p-2 cursor-pointer hover:bg-secondary rounded-md">
-                                                            <DotsHorizontalIcon />
-                                                        </div>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent>
-                                                        <DropdownMenuItem className="cursor-pointer" onClick={() => downloadInvoiceJSON(invoice.id)}>Export JSON as...</DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-
+                                                <InvoiceSettingsButton 
+                                                    id={invoice.id} 
+                                                    type="invoice-out" 
+                                                    setRefetchInvoice={setRefetchInvoice} 
+                                                />
                                             </TableCell>                                  
                                         </TableRow>
                                     )

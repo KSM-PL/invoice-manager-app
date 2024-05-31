@@ -31,6 +31,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from './../../lib/utils';
+import InvoiceSettingsButton from "@/components/InvoiceSettingsButton/InvoiceSettingsButton";
 
 const InvoiceIn = () => {
 	const authHeader = useAuthHeader();
@@ -42,6 +43,7 @@ const InvoiceIn = () => {
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
 
+    const [refetchInvoice, setRefetchInvoice] = useState(false);
 
     const fetchInvoices = async () => {
         setLoading(true);
@@ -82,9 +84,10 @@ const InvoiceIn = () => {
     };
 
     useEffect(() => {
+        setRefetchInvoice(false);
         fetchInvoices();
         // console.log(currentPage);
-    }, [currentPage]);
+    }, [currentPage, refetchInvoice]);
 
     const handlePrevPage = () => {
         if (currentPage > 1) {
@@ -98,14 +101,10 @@ const InvoiceIn = () => {
         }
     };
 
+
     return (
-        <MainContainer type="invoice-in">
+        <MainContainer type="invoice-in" description="Rows are sorted by Due date.">
             <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-                <div className="flex justify-center items-center">
-                    <p className="text-sm text-muted-foreground text-center">
-                        Rows are sorted by Due date.
-                    </p>
-                </div>
                 <Table>
                     {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                     <TableHeader>
@@ -119,28 +118,28 @@ const InvoiceIn = () => {
                             <TableHead className="w-fit text-right text-nowrap"></TableHead>
                         </TableRow>
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className='w-full'>
 
                         {loading ? (
                             <>
-                            <TableRow>
-                                <TableCell><Skeleton className="w-[180px] h-[30px] my-1" /></TableCell>
-                                <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
-                                <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
-                                <TableCell><Skeleton className="w-full h-[30px]" /></TableCell>
-                                <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
-                                <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
-                                <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell><Skeleton className="w-[180px] h-[30px] my-1" /></TableCell>
-                                <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
-                                <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
-                                <TableCell><Skeleton className="w-full h-[30px]" /></TableCell>
-                                <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
-                                <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
-                                <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
-                            </TableRow>
+                                <TableRow>
+                                    <TableCell><Skeleton className="w-[170px] h-[30px] my-1" /></TableCell>
+                                    <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[80px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-full h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[60px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[30px] h-[30px]" /></TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell><Skeleton className="w-[170px] h-[30px] my-1" /></TableCell>
+                                    <TableCell><Skeleton className="w-[90px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[80px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-full h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[60px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[40px] h-[30px]" /></TableCell>
+                                    <TableCell><Skeleton className="w-[30px] h-[30px]" /></TableCell>
+                                </TableRow>
                             </>
 
                         ) : (
@@ -154,17 +153,11 @@ const InvoiceIn = () => {
                                         <TableCell className={cn(new Date() > new Date(invoice.dueDate) ? "bg-red-500" : "")}>{new Date(invoice.dueDate).toLocaleDateString()}</TableCell>
                                         <TableCell>${invoice.amount}</TableCell>
                                         <TableCell>
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger>
-                                                    <div className="gap-1 p-2 cursor-pointer hover:bg-secondary rounded-md">
-                                                        <DotsHorizontalIcon />
-                                                    </div>
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent>
-                                                    <DropdownMenuItem className="cursor-pointer">Pay</DropdownMenuItem>
-                                                    <DropdownMenuItem className="cursor-pointer">Export JSON as...</DropdownMenuItem>
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
+                                            <InvoiceSettingsButton 
+                                                id={invoice.id} 
+                                                type="invoice-in" 
+                                                setRefetchInvoice={setRefetchInvoice} 
+                                            />                                        
                                         </TableCell>
                                         
                                     </TableRow>
