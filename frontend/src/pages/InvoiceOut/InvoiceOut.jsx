@@ -59,21 +59,17 @@ const InvoiceOut = () => {
             return response.json();
         })
         .then(data => {
-            console.log(data);
-            
             setInvoices(data.content);
             setTotalPages(data.totalPages);
             setLoading(false);
-
         })
         .catch(error => {
-            console.log(error);
             const errorMessage = JSON.parse(error.message);
 
             toast({
                 variant: "destructive",
                 title: "Uh oh! Something went wrong.",
-                description: errorMessage.message,
+                description: errorMessage.error,
             })
         });
     };
@@ -81,7 +77,6 @@ const InvoiceOut = () => {
     useEffect(() => {
         setRefetchInvoice(false);
         fetchInvoices();
-        // console.log(currentPage);
     }, [currentPage, refetchInvoice]);
 
     const handlePrevPage = () => {
