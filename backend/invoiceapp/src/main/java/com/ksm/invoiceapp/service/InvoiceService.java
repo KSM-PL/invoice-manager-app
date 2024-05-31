@@ -12,4 +12,8 @@ public interface InvoiceService {
     void payInvoice(String invoiceId);
 
     InvoiceResponseDto getInvoiceById(String invoiceId);
+
+
+    Page<InvoiceResponseDto> getInvoicesPaidForUser(String type, Boolean isPaid, int pageNumber, int pageSize, String sortField, String sortDirection);
 }
+

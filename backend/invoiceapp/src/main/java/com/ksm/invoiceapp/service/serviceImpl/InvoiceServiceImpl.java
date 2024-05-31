@@ -58,6 +58,38 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    public Page<InvoiceResponseDto> getInvoicesPaidForUser(String type, Boolean isPaid, int pageNumber, int pageSize, String sortField, String sortDirection){
+        String userId = authService.getLoggedUser().getId();
+
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(direction, sortField));
+
+        Page<Invoice> invoices = null;
+
+        if (Objects.equals(type, "in")) {
+            if (isPaid) {
+                invoices = invoiceRepository.findByRecipientIdAndIsPaid(userId, true, pageable);
+            } else {
+                invoices = invoiceRepository.findByRecipientIdAndIsPaid(userId, false, pageable);
+            }
+        } else if (Objects.equals(type, "out")) {
+            if (isPaid) {
+                invoices = invoiceRepository.findByAuthorIdAndIsPaid(userId, true, pageable);
+            } else {
+                invoices = invoiceRepository.findByAuthorIdAndIsPaid(userId, false, pageable);
+            }
+        }
+
+        return new PageImpl<>(
+                invoices.stream()
+                        .map(invoiceMappper::mapToInvoiceResponseDto)
+                        .collect(Collectors.toList()),
+                pageable,
+                invoices.getTotalElements()
+        );
+    }
+
+    @Override
     public void payInvoice(String invoiceId) {
         Invoice invoice = invoiceRepository.findById(invoiceId)
                 .orElseThrow(() -> new IllegalArgumentException("Invoice with ID " + invoiceId + " not found"));
@@ -71,4 +103,5 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .orElseThrow(() -> new IllegalArgumentException("Invoice with ID " + invoiceId + " not found"));
         return invoiceMappper.mapToInvoiceResponseDto(invoice);
     }
+
 }

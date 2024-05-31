@@ -53,4 +53,18 @@ public class InvoiceController {
         InvoiceResponseDto invoiceResponseDto = invoiceService.getInvoiceById(invoiceId);
         return ResponseEntity.status(HttpStatus.OK).body(invoiceResponseDto);
     }
+
+    @GetMapping("/history")
+    public ResponseEntity<Page<InvoiceResponseDto>> getInvoicesPaidForUser(@RequestParam String type,
+                                                                       @RequestParam Boolean isPaid,
+                                                                       @RequestParam int pageNumber,
+                                                                       @RequestParam int pageSize,
+                                                                       @RequestParam(required = false, defaultValue = "created_at") String sortField,
+                                                                       @RequestParam(required = false, defaultValue = "ASC") String sortDirection)
+    {
+        Page<InvoiceResponseDto> res = invoiceService.getInvoicesPaidForUser(type,isPaid, pageNumber, pageSize, sortField, sortDirection);
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
+
 }

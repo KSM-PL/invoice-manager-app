@@ -12,5 +12,7 @@ public interface InvoiceRepository extends MongoRepository<Invoice,String> {
 
     Page<Invoice> findByAuthorId(String id, Pageable pageable);
 
+    Page<Invoice> findByRecipientIdAndIsPaid(String recipientId, boolean isPaid, Pageable pageable);
+    Page<Invoice> findByAuthorIdAndIsPaid(String authorId, boolean isPaid, Pageable pageable);
 
 }
