@@ -92,7 +92,7 @@ const CreateInvoice = () => {
                 toast({
                     variant: "destructive",
                     title: "Uh oh! Something went wrong.",
-                    description: errorMessage.message,
+                    description: errorMessage.error,
                 })
             });
 
