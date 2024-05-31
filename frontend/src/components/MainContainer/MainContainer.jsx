@@ -26,7 +26,7 @@ const MainContainer = ({children, type = "default", description = ""}) => {
                         <h2 className="text-center text-3xl font-extrabold tracking-tight md:text-5xl lg:leading-[1.1] pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
                             Invoice in
                         </h2>
-                        <h3 className="max-w-[750px] text-center text-lg font-light text-foreground mt-2">
+                        <h3 className="w-full text-center text-lg font-light text-foreground mt-2">
                             {description}
                         </h3>
                         {children}
@@ -39,7 +39,7 @@ const MainContainer = ({children, type = "default", description = ""}) => {
                         <h2 className="text-center text-3xl font-extrabold tracking-tight md:text-5xl lg:leading-[1.1] pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
                             Invoice out
                         </h2>
-                        <h3 className="max-w-[750px] text-center text-lg font-light text-foreground mt-2">
+                        <h3 className="w-full text-center text-lg font-light text-foreground mt-2">
                             {description}
                         </h3>
                         {children}
@@ -52,7 +52,7 @@ const MainContainer = ({children, type = "default", description = ""}) => {
                         <h2 className="text-center text-3xl font-extrabold tracking-tight md:text-5xl lg:leading-[1.1] pt-4 md:pt-8 [text-shadow:_0_0_5px_rgb(255_255_255_/_100%)]">
                             Create invoice
                         </h2>
-                        <h3 className="max-w-[750px] text-center text-lg font-light text-foreground mt-2">
+                        <h3 className="w-full text-center text-lg font-light text-foreground mt-2">
                             {description}
                         </h3>
                         {children}
