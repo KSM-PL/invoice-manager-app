@@ -79,7 +79,7 @@ const CreateInvoice = () => {
 
                 toast({
                     title: "Hurrah!",
-                    description: "Successfully logged in!",
+                    description: "Successfully created!",
                     className: "bg-green-800"
                 })
 
@@ -128,9 +128,16 @@ const CreateInvoice = () => {
                             <Input 
                                 id="amount"
                                 type="number"
+                                step="0.01"
+                                min="0.00"
+                                max="9007199254740991"
                                 placeholder="$" 
                                 {...register("amount", {
                                     required: "Amount is required",
+                                    min: {
+                                        value: 0.01,
+                                        message: "Amount must be above 0"
+                                    }
                                 })}
                             />
                             <p className="text-red-500 h-4 text-xs">{errors.amount && errors.amount.message}</p>
@@ -150,40 +157,38 @@ const CreateInvoice = () => {
                         
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="dueDate" className={cn(errors.dueDate ? "text-red-500" : "text-foreground")}>Due date</Label>
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <Button
-                                        variant={"outline"}
-                                    >
-                                        {selectedDate ? selectedDate.toLocaleDateString() : "Select date"}
-                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                    </Button>
-                                </PopoverTrigger>
-
-                                <PopoverContent className="w-auto p-0" align="start">
-                                    <Controller
-                                            control={control}
-                                            name='dueDate'
-                                            rules={{ required: "Due date is required" }}
-                                            render={({ field: { onChange, value } }) => (
-                                                <Calendar
-                                                    mode="single"
-                                                    selected={value} 
-                                                    onSelect={(date) => {
-                                                        setSelectedDate(date);
-                                                        onChange(date);
-                                                    }}
-                                                    initialFocus
-                                                />
-                                            )}
-                                        />
-
-                                </PopoverContent>
-                            </Popover>
+                            <Controller
+                                control={control}
+                                name='dueDate'
+                                rules={{ required: "Due date is required" }}
+                                render={({ field: { onChange, value } }) => (
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button
+                                                variant={"outline"}
+                                            >
+                                                {value ? value.toLocaleDateString() : "Select date"}
+                                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0" align="start">
+                                            <Calendar
+                                                mode="single"
+                                                selected={value} 
+                                                onSelect={(date) => {
+                                                    setSelectedDate(date);
+                                                    onChange(date);
+                                                }}
+                                                initialFocus
+                                            />
+                                        </PopoverContent>
+                                    </Popover>
+                                )}
+                            />
                             <p className="text-red-500 h-4 text-xs">{errors.dueDate && errors.dueDate.message}</p>
                         </div>
                     </div>
-                    <Button className="w-full" type="submit" >Send an invoice</Button>
+                    <Button className="w-full mt-3" type="submit" >Send an invoice</Button>
 
 
                 </form>
