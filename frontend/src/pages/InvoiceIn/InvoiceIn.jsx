@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from './../../lib/utils';
 import InvoiceSettingsButton from "@/components/InvoiceSettingsButton/InvoiceSettingsButton";
+import ShowArchiveButton from './../../components/ShowArchiveButton/ShowArchiveButton';
 
 const InvoiceIn = () => {
 	const authHeader = useAuthHeader();
@@ -48,7 +49,7 @@ const InvoiceIn = () => {
     const fetchInvoices = async () => {
         setLoading(true);
 
-        fetch(`http://localhost:8080/api/v1/invoices/?pageNumber=${(currentPage - 1)}&pageSize=${pageSize}&type=in&sortField=dueDate&sortDirection=asc`, {
+        fetch(`http://localhost:8080/api/v1/invoices/history?pageNumber=${(currentPage - 1)}&pageSize=${pageSize}&type=in&sortField=dueDate&isPaid=false&sortDirection=asc`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json', 
@@ -104,7 +105,10 @@ const InvoiceIn = () => {
 
     return (
         <MainContainer type="invoice-in" description="Rows are sorted by Due date.">
-            <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+            
+            <ShowArchiveButton type="in"/>
+
+            <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8 max-w-full w-fit">
                 <Table>
                     {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                     <TableHeader>
