@@ -63,15 +63,12 @@ const ShowArchiveButton = ({type = "in"}) => {
             return response.json();
         })
         .then(data => {
-            console.log(data);
-            
             setInvoices(data.content);
             setTotalPages(data.totalPages);
             setLoading(false);
 
         })
         .catch(error => {
-            console.log(error);
             const errorMessage = JSON.parse(error.message);
 
             toast({
@@ -85,7 +82,6 @@ const ShowArchiveButton = ({type = "in"}) => {
     useEffect(() => {
         setRefetchInvoice(false);
         fetchInvoices();
-        // console.log(currentPage);
     }, [currentPage, refetchInvoice]);
 
     const handlePrevPage = () => {
@@ -121,7 +117,7 @@ const ShowArchiveButton = ({type = "in"}) => {
                     </DialogDescription>
                 </DialogHeader>
 
-                <div className="flex flex-col gap-4 p-4 max-w-full">
+                <div className="flex flex-col gap-4 p-4 max-w-full w-full">
                     <Table className="overflow-x-auto">
                         <TableHeader>
                             <TableRow>
