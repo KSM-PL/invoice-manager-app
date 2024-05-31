@@ -28,6 +28,9 @@ const Home = () => {
     const [invoicesIn, setInvoicesIn] = useState([]);
     const [invoicesOut, setInvoicesOut] = useState([]);
 
+    const [totalInvoicesIn, setTotalInvoicesIn] = useState(0);
+    const [totalInvoicesOut, setTotalInvoicesOut] = useState(0);
+
     useEffect(() => {
         setLoading(true);
 
@@ -47,19 +50,18 @@ const Home = () => {
             return response.json();
         })
         .then(data => {
+            setTotalInvoicesIn(data.totalElements);
             setInvoicesIn(data.content);
         })
         .catch(error => {
-            console.log(error);
             const errorMessage = JSON.parse(error.message);
 
             toast({
                 variant: "destructive",
                 title: "Uh oh! Something went wrong.",
-                description: errorMessage.message,
+                description: errorMessage.error,
             })
         });
-
 
 
         fetch(`http://localhost:8080/api/v1/invoices/?pageNumber=0&pageSize=3&type=out&sortField=created_at&sortDirection=desc`, {
@@ -78,82 +80,44 @@ const Home = () => {
             return response.json();
         })
         .then(data => {
+            setTotalInvoicesOut(data.totalElements);
             setInvoicesOut(data.content);
             setLoading(false);
         })
         .catch(error => {
-            console.log(error);
             const errorMessage = JSON.parse(error.message);
 
             toast({
                 variant: "destructive",
                 title: "Uh oh! Something went wrong.",
-                description: errorMessage.message,
+                description: errorMessage.error,
             })
         });
-       
     }, []);
-
 
     return (
         <MainContainer type="dashboard">
             <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-                <div className="grid gap-4 grid-cols-2 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+                <div className="grid gap-4 grid-cols-2 md:grid-cols-2 md:gap-8 lg:grid-cols-2">
                     <Card x-chunk="dashboard-01-chunk-2" className="col-span-1">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">
-                                ???????
+                                Total received invoices 
                             </CardTitle>
-                            {/* <CreditCard className="h-4 w-4 text-muted-foreground" /> */}
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-bold">??</div>
-                            {/* <p className="text-xs text-muted-foreground">
-                                +19% from last month
-                            </p> */}
+                            <div className="text-4xl font-bold">{totalInvoicesIn}</div>
                         </CardContent>
                     </Card>
 
                     <Card x-chunk="dashboard-01-chunk-2" className="col-span-1">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">
-                                ???????
+                                Total sent invoices
                             </CardTitle>
-                            {/* <CreditCard className="h-4 w-4 text-muted-foreground" /> */}
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-bold">??</div>
-                            {/* <p className="text-xs text-muted-foreground">
-                                +19% from last month
-                            </p> */}
-                        </CardContent>
-                    </Card>
-                    <Card x-chunk="dashboard-01-chunk-2" className="col-span-1">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">
-                                ???????
-                            </CardTitle>
-                            {/* <CreditCard className="h-4 w-4 text-muted-foreground" /> */}
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-3xl font-bold">??</div>
-                            {/* <p className="text-xs text-muted-foreground">
-                                +19% from last month
-                            </p> */}
-                        </CardContent>
-                    </Card>
-                    <Card x-chunk="dashboard-01-chunk-3" className="col-span-1">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">
-                                Number of invoices
-                            </CardTitle>
-                            {/* <Activity className="h-4 w-4 text-muted-foreground" /> */}
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-3xl font-bold">??</div>
-                            {/* <p className="text-xs text-muted-foreground">
-                                +201 since last hour
-                            </p> */}
+                            <div className="text-4xl font-bold">{totalInvoicesOut}</div>
                         </CardContent>
                     </Card>
                 </div>
