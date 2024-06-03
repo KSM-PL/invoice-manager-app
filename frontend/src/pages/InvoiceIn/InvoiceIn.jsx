@@ -102,7 +102,7 @@ const InvoiceIn = () => {
     return (
         <MainContainer type="invoice-in" description="Rows are sorted by Due date.">
             
-            <ShowArchiveButton type="in"/>
+            <ShowArchiveButton type="in" refetchInvoice={refetchInvoice} setRefetchInvoice={setRefetchInvoice} />
 
             <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8 max-w-full w-fit">
                 <Table>

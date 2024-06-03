@@ -32,7 +32,7 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from './../../lib/utils';
 
-const ShowArchiveButton = ({type = "in"}) => {
+const ShowArchiveButton = ({type = "in", refetchInvoice, setRefetchInvoice}) => {
 	const authHeader = useAuthHeader();
     const { toast } = useToast();
 
@@ -42,7 +42,7 @@ const ShowArchiveButton = ({type = "in"}) => {
     const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(0);
 
-    const [refetchInvoice, setRefetchInvoice] = useState(false);
+    // const [refetchInvoice, setRefetchInvoice] = useState(false);
 
     const fetchInvoices = async () => {
         setLoading(true);

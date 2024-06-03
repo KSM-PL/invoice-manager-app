@@ -93,7 +93,7 @@ const InvoiceOut = () => {
     
     return (
         <MainContainer type="invoice-out" description="Rows are sorted by Due date.">
-            <ShowArchiveButton type="out"/>
+            <ShowArchiveButton type="out" refetchInvoice={refetchInvoice} setRefetchInvoice={setRefetchInvoice} />
 
             <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8 max-w-full w-fit">
                 <Table>
@@ -146,7 +146,7 @@ const InvoiceOut = () => {
                                             <TableCell>
                                                 <InvoiceSettingsButton 
                                                     id={invoice.id} 
-                                                    type="invoice-out" 
+                                                    type="invoice-out"
                                                     setRefetchInvoice={setRefetchInvoice} 
                                                 />
                                             </TableCell>                                  
