@@ -1,22 +1,20 @@
-# frontend/Dockerfile
-
-# Use an official node runtime as a parent image
+# Użyj oficjalnego runtime node jako obrazu bazowego
 FROM node:20.12.0-alpine3.19
 
-# Set the working directory
+# Ustaw katalog roboczy
 WORKDIR /app
 
-# Copy the package.json and package-lock.json
+# Skopiuj package.json oraz package-lock.json
 COPY package*.json ./
 
-# Install dependencies
+# Zainstaluj zależności
 RUN npm install
 
-# Copy the rest of the application code
+# Skopiuj resztę kodu aplikacji
 COPY . .
 
-# Expose the port the app runs on
+# Otwórz port, na którym działa aplikacja
 EXPOSE 5173
 
-# Start the application
+# Uruchom aplikację
 CMD ["npm", "run", "dev","--","--host"]

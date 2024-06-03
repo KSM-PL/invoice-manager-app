@@ -16,15 +16,11 @@ RUN mvn clean package -DskipTests
 # Etap uruchomieniowy: użyj mniejszego obrazu Javy do uruchomienia aplikacji
 FROM openjdk:17.0.1-jdk-slim
 
-
 # Ustaw katalog roboczy w kontenerze
 WORKDIR /app
 
 # Skopiuj skompilowany artefakt (jar) z etapu budowania
 COPY --from=build /app/target/*.jar app.jar
-
-# Opcjonalnie: otwórz odpowiedni port
-
 
 # Uruchom aplikację Java
 CMD ["java", "-jar", "app.jar"]
