@@ -8,8 +8,12 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class InvoiceappApplication {
 
 	public static void main(String[] args) {
-		Dotenv dotenv = Dotenv.load();
-		System.setProperty("MONGO_URI", dotenv.get("MONGO_URI"));
+		//Dotenv dotenv = Dotenv.load();
+		//System.setProperty("MONGO_URI", dotenv.get("MONGO_URI"));
+
+    //System.setProperty("spring.data.mongodb.uri", "mongodb://mongo:27017/invoicedb");
+
+
 		SpringApplication.run(InvoiceappApplication.class, args);
 	}
 

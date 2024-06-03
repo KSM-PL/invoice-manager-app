@@ -1,0 +1,39 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongoContainer
+    restart: always
+    ports:
+      - "27017:27017"  # Map port 27017 in the container to port 27017 on the host
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: invoicedb
+    volumes:
+      - ./mongo/mongo-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+
+  frontend:
+    stdin_open: true
+    restart: always
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"  # Map port 80 in the container to port 3000 on the host
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend/invoiceapp
+    ports:
+      - "8080:8080"  # Map port 8080 in the container to port 8080 on the host
+    environment:
+      - MONGO_URI=mongodb://mongoContainer:27017/invoicedb
+    depends_on:
+      - mongo
+
+volumes:
+  mongo-data:
