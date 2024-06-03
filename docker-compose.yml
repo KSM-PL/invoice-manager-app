@@ -1,8 +1,7 @@
-# docker-compose.yml
 version: '3.8'
 services:
   mongo:
-    image: mongo:latest
+    image: mongo:7.0.8
     container_name: mongoContainer
     restart: always
     ports:
