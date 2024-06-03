@@ -151,9 +151,9 @@ const Navbar = () => {
                                 </div>
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem className="cursor-pointer">Export data (JSON)</DropdownMenuItem>
+                            {/* <DropdownMenuItem className="cursor-pointer">Export data (JSON)</DropdownMenuItem> */}
                             {/* <DropdownMenuItem className="cursor-pointer">Support</DropdownMenuItem> */}
-                            <DropdownMenuSeparator />
+                            {/* <DropdownMenuSeparator /> */}
                             <Link to="/logout">
                                 <DropdownMenuItem className="cursor-pointer">Logout</DropdownMenuItem>
                             </Link>
