@@ -1,7 +1,5 @@
 
 # Invoice Manager App
-![App Screenshot](https://i.imgur.com/xBRwvug.png)
-
 ## About The Project
 
 This project is a web application that allows users to manage invoices online in an intuitive and efficient manner. The application enables users to create and send invoices to authorized recipients, simulate payments, and view both sent and received invoices. Additionally, the service allows users to download selected invoice data in JSON format.
@@ -23,9 +21,9 @@ This project is a web application that allows users to manage invoices online in
    cd ./invoice-manager-app
    ```
 3. Build and run app:
-```sh
-   docker-compose up --build
-```
+    ```sh
+    docker-compose up --build
+    ```
 4. Open link `http://localhost:5173/`
 
 
